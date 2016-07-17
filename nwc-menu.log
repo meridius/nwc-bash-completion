@@ -1,0 +1,75 @@
+NW7 Console version 0.0.21
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display this help message
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi            Force ANSI output
+      --no-ansi         Disable ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Available commands:
+  _completion             BASH completion hook.
+  add                     Adds package of specified type into project, using interactive dialog
+  bc-breaks               Writes all BC breakes into /<mode>/<package-name>changelog.log file for all (or selected) packages.
+  branches                Prints current branches of inspire packages
+  brs                     Prints current branches of inspire packages
+  build                   Builds project artifact (runner for phing)
+  build-media             build media directory using r.js
+  changes                 Checks for changes in inspire composer packages (located in /lib/composer/inspire/*)
+  ci                      hg commit shortuct, with auto-detection of user's prefix
+  cip                     hg commit shortuct above project's inspire packages, with auto-detection of user's prefix
+  cl                      Writes all BC breakes into /<mode>/<package-name>changelog.log file for all (or selected) packages.
+  clean-temp              Cleans project directories
+  clone                   Clones given project (and runs basic initialization)
+  close-branch            Closes given branch and merges it into the given merge-branch (default: default)
+  commit                  hg commit shortuct, with auto-detection of user's prefix
+  commit-packages         hg commit shortuct above project's inspire packages, with auto-detection of user's prefix
+  deploy                  deploys given folder to remote server
+  deploy-copy             Deploys current project state to testing server
+  dom-binder-loader       Finds all Dom.js files and generates DomBinderLoader.coffee dependencies definition
+  dump-autoload           Dumps project autoloader
+  echo                    Echoes project depenednt informations
+  extensions              Manipulation and verification of project extensions.neon configuration.
+  generate-entity         Creates entities from tables.xml of old NW backend module
+  help                    Displays help for a command
+  init-project            Initializes new, empty project with default structure of nw7init-repo
+  install                 Alias for composer's install command
+  last-tag-modifications  Writes all changes on default since last tag above stable
+  link-packages           Creates symlink to inspire composer package stored in ~/php/nw7-packages
+  link-upload             
+  list                    Lists commands
+  locale                  Dumps translation .neon files to .csv files
+  make-project            Initializes database, hg repo and empty project structure
+  make-text-web           
+  media                   Link/unlink project media
+  packages                Show information about installed packages
+  prepare-stable          Shortcut for merge default to stable, commit, optionally tag and merge changes back to default
+  pup                     hg update & hg pull shortuct above project's inspire packages
+  remove-source-map       rsync given directory to server
+  require-js-mapping      Generates bootstrap.coffee file from bootstrap-template.coffee, adding requireJS mapping
+  rewrite                 Rewrites inspire package template or setting.neon file on project
+  rewrite-config          Rewrites files from inspire package to project
+  rewrite-php             Rewrites files from inspire package to project
+  rewrite-presenter       Rewrites files from inspire package to project
+  rewrite-setting         Rewrites files from inspire package to project
+  rewrite-template        Rewrites template from inspire package to project
+  rewrite-translation     Rewrites files from inspire package to project
+  run                     Runs given command inside all package dirs
+  satis                   Manipulates satis packages - add/remove/show/update list of packages
+  self-update             Updates NWC to latest revision
+  session-init            Initilizes nested session directories
+  sql-dump                Shortcut and simple-to-use wizard for running sqldump command
+  sqldump                 Shortcut and simple-to-use wizard for running sqldump command
+  switch-branches         Switch all packages and project to given branch (if exists)
+  tag-release             Tags release to next patch version (i.e. 1.1.3 -> 1.1.4) via hg tag
+  test                    Run PHPUnit tests of current package.
+  test-all                Run PHPUnit tests of all packages
+  unlink-packages         Removes symlink to package stored in ~/php/inspire and fetches composer package.
+  update                  Updates while project (if no package specified) or to latest stable tag.
+  update-packages         hg update & hg pull shortuct above project's inspire packages
+  version                 Prints latest hg version detected from hg tags

@@ -1,0 +1,139 @@
+_nwc() {
+    local cur prev words cword
+    _init_completion || return
+    local opts optsglobal optslocal commands
+    COMPREPLY=()
+
+    # cmd > subcmd > prev
+
+    # cmd="${1##*/}"
+    # com="${2##*/}"
+    # cur="${COMP_WORDS[COMP_CWORD]}"
+    # prev="${COMP_WORDS[COMP_CWORD-1]}"
+    optsglobal="-h --help -q --quiet -V --version --ansi --no-ansi -n --no-interaction -v -vv -vvv --verbose"
+    commands="_completion add bc-breaks branches brs build build-media changes ci cip cl clean-temp clone close-branch commit commit-packages deploy deploy-copy dom-binder-loader dump-autoload echo extensions generate-entity help init-project install last-tag-modifications link-packages link-upload list locale make-project make-text-web media packages prepare-stable pup remove-source-map require-js-mapping rewrite rewrite-config rewrite-php rewrite-presenter rewrite-setting rewrite-template rewrite-translation run satis self-update session-init sql-dump sqldump switch-branches tag-release test test-all unlink-packages update update-packages version"
+
+    local subcword cmd subcmd
+    for (( subcword=1; subcword < ${#words[@]}-1; subcword++ )); do
+        [[ -n $cmd ]] && subcmd=${words[subcword]} && break
+        [[ ${words[subcword]} != -* ]] && cmd=${words[subcword]}
+    done
+
+    if [[ -z $cmd ]]; then
+        case $cur in
+            -*)
+                COMPREPLY=( $(compgen -W "${optsglobal}" -- ${cur}) )
+                return 0
+                ;;
+            *)
+                COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
+                return 0
+                ;;
+        esac
+    fi
+
+    echo "<${cword}><${subcword}><${cmd}><${subcmd}><${prev}>"
+
+    case "${cmd}" in
+        _completion)            optslocal="-g --generate-hook -p --program=" ;;
+        add)                    optslocal="--pwd= -p --project= --user=" ;;
+        bc-breaks|cl)
+            case "${subcmd}" in
+                --)
+                    case "${prev}" in
+                        current|new)
+                            optslocal="abc def" # TODO change this to list of installed module dirs
+                            COMPREPLY=( $(compgen -W "${optslocal}" -- ${cur}) )
+                            return 0
+                            ;;
+                    *)
+                        # if [[ $cword -eq $subcword ]]; then
+                            optslocal="current new"
+                            COMPREPLY=( $(compgen -W "${optslocal}" -- ${cur}) )
+                            return 0
+                        # fi
+                        ;;
+                    esac
+                    ;;
+                *)
+                    if [[ $cword -eq $subcword ]]; then
+                        optslocal="--pwd= -p --project= --user= -a --all -b --branch= -m --meld --"
+                        COMPREPLY=( $(compgen -W "${optslocal}" -- ${cur}) )
+                        return 0
+                    else
+                        echo "fuck"
+                    fi
+                    ;;
+            esac
+            # optslocal="--pwd= -p --project= --user= -a --all -b --branch= -m --meld --"
+            # [[ "${prev}" == "--" ]] && optslocal="current new"
+            ;; # TODO
+        branches|brs)           optslocal="--pwd= -p --project= --user=" ;;
+        build)                  optslocal="--pwd= -f --buildfile= --dev --project-dev" ;; # TODO
+        build-media)            optslocal="--pwd=" ;;
+        changes)                optslocal="--pwd= -p --project= --user=" ;;
+        clean-temp)             optslocal="--pwd= -p --project= --user= -d --dump-autoloader" ;; # TODO
+        clone)                  optslocal="-d --destination=DESTINATION -l --link-packages -r --rev=" ;; # TODO
+        close-branch)           optslocal="--pwd= -m --merge-branch= --no-merge" ;; # TODO
+        commit|ci)              optslocal="-t --tag" ;;
+        commit-packages|cip)    optslocal="--pwd= -p --project= --user=" ;;
+        deploy)                 optslocal="--pwd= --ask --force-dest-dir= --force-url= -r --revert -d --dev-copy" ;; # TODO
+        deploy-copy)            optslocal="--pwd= -p --project= --user=" ;;
+        dom-binder-loader)      optslocal="--pwd= -p --project= --user=" ;;
+        dump-autoload)          optslocal="--pwd= -p --project= --user= -o --optimize" ;;
+        echo)                   optslocal="--pwd= -p --project= --user=" ;; # TODO
+        extensions)             optslocal="--pwd= -p --project= --user=" ;; # TODO
+        generate-entity)        optslocal="--pwd= -p --project= --user= -m --without-manager -1 --single-entity --db=" ;; # TODO
+        help)
+            optslocal="--xml --format --raw"
+            opts="${optslocal} ${optsglobal} ${commands}"
+            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+            return 0
+            ;; # TODO
+        init-project)           optslocal="--init-repo=" ;; # TODO
+        install)                optslocal="--pwd= -p --project= --user=" ;;
+        last-tag-modifications) optslocal="--pwd= -p --project= --user=" ;;
+        link-packages)          optslocal="--pwd= -p --project= --user= -l --link-package= -f --force-clone -r --force-rm -m --move" ;;
+        link-upload)            optslocal="--pwd= -p --project= --user= --project-path=" ;;
+        list)                   optslocal="--xml --raw --format=" ;; # TODO
+        locale)                 optslocal="--pwd= -p --project= --user= --srclang-ids= -s --srclang -f --file=" ;; # TODO
+        make-project)           optslocal="-s --skip-db-init --db-template= --project-template= --source-upload-dir=" ;; # TODO
+        make-text-web)          optslocal="--pwd=" ;; # TODO
+        media)                  optslocal="--pwd= -p --project= --user= -d --devel -f --force-production -c --compile-missing-cs" ;; # TODO
+        packages)               optslocal="--pwd= -p --project= --user= -r --hg-revisions -i --inspire-only" ;;
+        prepare-stable)         optslocal="--pwd= -t --tag" ;;
+        remove-source-map)      optslocal="--pwd=" ;;
+        require-js-mapping)     optslocal="--pwd= -p --project= --user=" ;;
+        rewrite)                optslocal="--pwd= -p --project= --user=" ;; # TODO
+        rewrite-config)         optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
+        rewrite-php)            optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
+        rewrite-presenter)      optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
+        rewrite-setting)        optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
+        rewrite-template)       optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
+        rewrite-translation)    optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
+        run)                    optslocal="--pwd= -p --project= --user= -c --confirm" ;; # TODO
+        satis)                  optslocal="" ;; # TODO
+        self-update)            optslocal="--pwd=" ;;
+        session-init)           optslocal="--pwd= -p --project= --user= -d --depth= --project-path" ;;
+        sql-dump|sqldump)       optslocal="--pwd= -i --import" ;; # TODO
+        switch-branches)        optslocal="--pwd= -p --project= --user= --pull" ;; # TODO
+        tag-release)            optslocal="-f --force-tag -u --push -r --retag -s --satis-update --no-actions" ;; # TODO
+        test)                   optslocal="--pwd= -p --project= --user= --filter= -C --clean" ;;
+        test-all)               optslocal="--pwd= -p --project= --user=" ;;
+        unlink-packages)        optslocal="--pwd= -p --project= --user= -pn --package-name=" ;;
+        update)                 optslocal="--pwd= -p --project= --user= --dev-media --reset" ;;
+        update-packages|pup)    optslocal="--pwd= -p --project= --user= --tracy -b --default-branch=" ;;
+        version)                optslocal="--pwd= -p --project= --user= -d --date -a --all -c --composer-compare" ;;
+        *)
+            return 0
+            ;;
+    esac
+
+    opts="${optslocal} ${optsglobal}"
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    return 0
+
+    # if [[ ${cur} == -* ]] ; then
+    # fi
+}
+complete -F _nwc nwc
