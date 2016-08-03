@@ -1,6 +1,8 @@
+# TODO exclude already present options (long and short) from autocompletion
 _nwc() {
-    local cur prev words cword
+    local cur prev words cword args
     _init_completion || return
+
     local opts optsglobal optslocal commands
     COMPREPLY=()
 
@@ -32,108 +34,333 @@ _nwc() {
         esac
     fi
 
-    echo "<${cword}><${subcword}><${cmd}><${subcmd}><${prev}>"
+
+
+    # Un-comment this for debug purposes:
+    # echo "<${cword}><${subcword}><${cmd}><${subcmd}><${prev}>"
+    # echo -e "\nprev = $prev, cur = $cur, firstword = $firstword, lastword = $lastword\n"
+
+
 
     case "${cmd}" in
-        _completion)            optslocal="-g --generate-hook -p --program=" ;;
-        add)                    optslocal="--pwd= -p --project= --user=" ;;
+        _completion)            optslocal="-g --generate-hook -p --program" ;;
+        add|\
+        branches|brs|\
+        changes|\
+        commit-packages|cip|\
+        deploy-copy|\
+        dom-binder-loader|\
+        install|\
+        last-tag-modifications|\
+        require-js-mapping|\
+        test-all)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
         bc-breaks|cl)
-            case "${subcmd}" in
-                --)
-                    case "${prev}" in
-                        current|new)
-                            optslocal="abc def" # TODO change this to list of installed module dirs
-                            COMPREPLY=( $(compgen -W "${optslocal}" -- ${cur}) )
-                            return 0
-                            ;;
-                    *)
-                        # if [[ $cword -eq $subcword ]]; then
-                            optslocal="current new"
-                            COMPREPLY=( $(compgen -W "${optslocal}" -- ${cur}) )
-                            return 0
-                        # fi
-                        ;;
-                    esac
-                    ;;
-                *)
-                    if [[ $cword -eq $subcword ]]; then
-                        optslocal="--pwd= -p --project= --user= -a --all -b --branch= -m --meld --"
-                        COMPREPLY=( $(compgen -W "${optslocal}" -- ${cur}) )
-                        return 0
-                    else
-                        echo "fuck"
-                    fi
-                    ;;
-            esac
-            # optslocal="--pwd= -p --project= --user= -a --all -b --branch= -m --meld --"
-            # [[ "${prev}" == "--" ]] && optslocal="current new"
-            ;; # TODO
-        branches|brs)           optslocal="--pwd= -p --project= --user=" ;;
-        build)                  optslocal="--pwd= -f --buildfile= --dev --project-dev" ;; # TODO
-        build-media)            optslocal="--pwd=" ;;
-        changes)                optslocal="--pwd= -p --project= --user=" ;;
-        clean-temp)             optslocal="--pwd= -p --project= --user= -d --dump-autoloader" ;; # TODO
-        clone)                  optslocal="-d --destination=DESTINATION -l --link-packages -r --rev=" ;; # TODO
-        close-branch)           optslocal="--pwd= -m --merge-branch= --no-merge" ;; # TODO
+            if $(_nwc_is_word_present "current") || $(_nwc_is_word_present "new") ; then
+                _nwc_complete_dirs lib/composer/inspire/
+                return 0
+            elif [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -a --all -b --branch -m --meld --"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    -b|--branch)    ;; # TODO suggest mercurial branches
+                    *)              optslocal="current new" ;;
+                esac
+            fi
+            ;;
+        build)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -f --buildfile --dev --project-dev --"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -f|--buildfile) _filedir && return 0 ;;
+                esac
+            fi
+            ;;
+        build-media)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                esac
+            fi
+            ;;
+        clean-temp)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -d --dump-autoloader --"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        clone)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="-d --destination -l --link-packages -r --rev --"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    -d|--destination)   _filedir -d && return 0 ;;
+                    -r|--rev)           ;; # TODO suggest HG revision numbers
+                    *)                  ;; # TODO suggest HG origin project (repo) names
+                esac
+            fi
+            ;;
+        close-branch)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -m --merge-branch --no-merge --"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)              _filedir -d && return 0 ;;
+                    -m|--merge-branch)  ;; # TODO suggest HG branch names
+                    *)                  ;; # TODO suggest HG branch names
+                esac
+            fi
+            ;;
         commit|ci)              optslocal="-t --tag" ;;
-        commit-packages|cip)    optslocal="--pwd= -p --project= --user=" ;;
-        deploy)                 optslocal="--pwd= --ask --force-dest-dir= --force-url= -r --revert -d --dev-copy" ;; # TODO
-        deploy-copy)            optslocal="--pwd= -p --project= --user=" ;;
-        dom-binder-loader)      optslocal="--pwd= -p --project= --user=" ;;
-        dump-autoload)          optslocal="--pwd= -p --project= --user= -o --optimize" ;;
-        echo)                   optslocal="--pwd= -p --project= --user=" ;; # TODO
-        extensions)             optslocal="--pwd= -p --project= --user=" ;; # TODO
-        generate-entity)        optslocal="--pwd= -p --project= --user= -m --without-manager -1 --single-entity --db=" ;; # TODO
+        deploy)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd --ask --force-dest-dir --force-url -r --revert -d --dev-copy --"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)              _filedir -d && return 0 ;;
+                    --force-dest-dir)   _filedir -d && return 0 ;; # TODO what does "remote destination directory" mean?
+                    *)                  ;; # TODO how am i supposed to know if i should suggest project (www) dir or server name (nw|sh1|user)?
+                esac
+            fi
+            ;;
+        dump-autoload)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -o --optimize"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        echo)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    *)              ;; # TODO suggest "type of rewritten file" and/or "Parameter specific value"
+                esac
+            fi
+            ;;
+        extensions)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    show|verify|\
+                    enable|remove|\
+                    format|disable)
+                        return
+                        ;;
+                    *)              optslocal="show verify enable remove format disable" ;;
+                esac
+            fi
+            ;;
+# ---------------- TODO -------------- continue implementing below this line
+        generate-entity)        optslocal="--pwd -p --project --user -m --without-manager -1 --single-entity --db=" ;; # TODO
         help)
             optslocal="--xml --format --raw"
             opts="${optslocal} ${optsglobal} ${commands}"
             COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
             return 0
             ;; # TODO
-        init-project)           optslocal="--init-repo=" ;; # TODO
-        install)                optslocal="--pwd= -p --project= --user=" ;;
-        last-tag-modifications) optslocal="--pwd= -p --project= --user=" ;;
-        link-packages)          optslocal="--pwd= -p --project= --user= -l --link-package= -f --force-clone -r --force-rm -m --move" ;;
-        link-upload)            optslocal="--pwd= -p --project= --user= --project-path=" ;;
-        list)                   optslocal="--xml --raw --format=" ;; # TODO
-        locale)                 optslocal="--pwd= -p --project= --user= --srclang-ids= -s --srclang -f --file=" ;; # TODO
-        make-project)           optslocal="-s --skip-db-init --db-template= --project-template= --source-upload-dir=" ;; # TODO
-        make-text-web)          optslocal="--pwd=" ;; # TODO
-        media)                  optslocal="--pwd= -p --project= --user= -d --devel -f --force-production -c --compile-missing-cs" ;; # TODO
-        packages)               optslocal="--pwd= -p --project= --user= -r --hg-revisions -i --inspire-only" ;;
-        prepare-stable)         optslocal="--pwd= -t --tag" ;;
-        remove-source-map)      optslocal="--pwd=" ;;
-        require-js-mapping)     optslocal="--pwd= -p --project= --user=" ;;
-        rewrite)                optslocal="--pwd= -p --project= --user=" ;; # TODO
-        rewrite-config)         optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
-        rewrite-php)            optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
-        rewrite-presenter)      optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
-        rewrite-setting)        optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
-        rewrite-template)       optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
-        rewrite-translation)    optslocal="--pwd= -p --project= --user= -f --force-rewrite" ;; # TODO
-        run)                    optslocal="--pwd= -p --project= --user= -c --confirm" ;; # TODO
+        init-project)           optslocal="--init-repo" ;; # TODO
+        link-packages)          optslocal="--pwd -p --project --user -l --link-package -f --force-clone -r --force-rm -m --move" ;;
+        link-upload)            optslocal="--pwd -p --project --user --project-path" ;;
+        list)                   optslocal="--xml --raw --format" ;; # TODO
+        locale)                 optslocal="--pwd -p --project --user --srclang-ids -s --srclang -f --file" ;; # TODO
+        make-project)           optslocal="-s --skip-db-init --db-template --project-template --source-upload-dir" ;; # TODO
+        make-text-web)          optslocal="--pwd" ;; # TODO
+        media)                  optslocal="--pwd -p --project --user -d --devel -f --force-production -c --compile-missing-cs" ;; # TODO
+        packages)               optslocal="--pwd -p --project --user -r --hg-revisions -i --inspire-only" ;;
+        prepare-stable)         optslocal="--pwd -t --tag" ;;
+        remove-source-map)      optslocal="--pwd" ;;
+        rewrite)                optslocal="--pwd -p --project --user" ;; # TODO
+        rewrite-config)         optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
+        rewrite-php)            optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
+        rewrite-presenter)      optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
+        rewrite-setting)        optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
+        rewrite-template)       optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
+        rewrite-translation)    optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
+        run)                    optslocal="--pwd -p --project --user -c --confirm" ;; # TODO
         satis)                  optslocal="" ;; # TODO
-        self-update)            optslocal="--pwd=" ;;
-        session-init)           optslocal="--pwd= -p --project= --user= -d --depth= --project-path" ;;
-        sql-dump|sqldump)       optslocal="--pwd= -i --import" ;; # TODO
-        switch-branches)        optslocal="--pwd= -p --project= --user= --pull" ;; # TODO
+        self-update)            optslocal="--pwd" ;;
+        session-init)           optslocal="--pwd -p --project --user -d --depth --project-path" ;;
+        sql-dump|sqldump)       optslocal="--pwd -i --import" ;; # TODO
+        switch-branches)        optslocal="--pwd -p --project --user --pull" ;; # TODO
         tag-release)            optslocal="-f --force-tag -u --push -r --retag -s --satis-update --no-actions" ;; # TODO
-        test)                   optslocal="--pwd= -p --project= --user= --filter= -C --clean" ;;
-        test-all)               optslocal="--pwd= -p --project= --user=" ;;
-        unlink-packages)        optslocal="--pwd= -p --project= --user= -pn --package-name=" ;;
-        update)                 optslocal="--pwd= -p --project= --user= --dev-media --reset" ;;
-        update-packages|pup)    optslocal="--pwd= -p --project= --user= --tracy -b --default-branch=" ;;
-        version)                optslocal="--pwd= -p --project= --user= -d --date -a --all -c --composer-compare" ;;
-        *)
-            return 0
-            ;;
+        test)                   optslocal="--pwd -p --project --user --filter -C --clean" ;;
+        unlink-packages)        optslocal="--pwd -p --project --user -pn --package-name" ;;
+        update)                 optslocal="--pwd -p --project --user --dev-media --reset" ;;
+        update-packages|pup)    optslocal="--pwd -p --project --user --tracy -b --default-branch" ;;
+        version)                optslocal="--pwd -p --project --user -d --date -a --all -c --composer-compare" ;;
+        # *)
+        #     return 0
+        #     ;;
     esac
 
-    opts="${optslocal} ${optsglobal}"
+
+    if [[ $cur == -* ]]; then
+        opts="${optsglobal} ${optslocal}"
+    else
+        opts="${optslocal}"
+    fi
     COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
     return 0
-
-    # if [[ ${cur} == -* ]] ; then
-    # fi
 }
+
+
+
+
+
+
+
+
+
+
+
+
+## Helper functions ###
+
+
+# Determines the first non-option word of the command line. This
+# is usually the command
+_nwc_get_firstword() {
+    local firstword i
+
+    firstword=
+    for ((i = 1; i < ${#COMP_WORDS[@]}; ++i)); do
+        if [[ ${COMP_WORDS[i]} != -* ]]; then
+            firstword=${COMP_WORDS[i]}
+            break
+        fi
+    done
+
+    echo $firstword
+}
+
+
+# Determines the last non-option word of the command line. This
+# is usally a sub-command
+_nwc_get_lastword() {
+    local lastword i
+
+    lastword=
+    for ((i = 1; i < ${#COMP_WORDS[@]}; ++i)); do
+        if [[ ${COMP_WORDS[i]} != -* ]] && [[ -n ${COMP_WORDS[i]} ]] && [[ ${COMP_WORDS[i]} != $cur ]]; then
+            lastword=${COMP_WORDS[i]}
+        fi
+    done
+
+    echo $lastword
+}
+
+
+_nwc_is_word_present() {
+    local word i is_present
+
+    word=$1
+    is_present=1
+    for ((i = 1; i < ${#COMP_WORDS[@]}; ++i)); do
+        if [[ ${COMP_WORDS[i]} == ${word} ]]; then
+            is_present=0
+            break
+        fi
+    done
+
+    return ${is_present}
+}
+
+
+_nwc_get_branches() {
+    local branches
+    # TODO
+    echo branches
+}
+
+
+_nwc_get_users() {
+    local usernames
+    # TODO
+    echo usernames
+}
+
+
+_nwc_get_projects() {
+    local projects
+    # TODO
+    echo projects
+}
+
+
+_nwc_complete_dirs() {
+    local module_dir="$1"
+    local do_test_dir=true
+    __expand_tilde_by_ref module_dir
+    [[ "$2" == "-n" ]] && do_test_dir=false
+    ${do_test_dir} && [[ ! -d ${module_dir} ]] && return
+
+    pushd ${module_dir} >/dev/null
+    _filedir -d
+    popd >/dev/null
+}
+
+
+_nwc_complete_files() {
+    local module_dir="$1"
+    __expand_tilde_by_ref module_dir
+    [[ -d ${module_dir} ]] && {
+        pushd ${module_dir} >/dev/null
+        _filedir
+        popd >/dev/null
+    }
+}
+
+
+
+
+
+
+
+
+
 complete -F _nwc nwc

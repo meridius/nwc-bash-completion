@@ -1,456 +1,27 @@
-nwc help _completion
-Usage:
-  _completion [options]
-
-Options:
-  -g, --generate-hook    Generate BASH code that sets up completion for this application.
-  -p, --program=PROGRAM  Program name that should trigger completion
-                                      (defaults to the absolute application path).
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- To enable BASH completion, run:
- 
-     eval `[program] _completion -g`.
- 
- Or for an alias:
- 
-     eval `[program] _completion -g -p [alias]`.
- 
-
-
-
-
-
-
-nwc help add
-Usage:
-  add [options]
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- Adds package of specified type into project, using interactive dialog
-
-
-
-
-
-
-nwc help bc-breaks
-Usage:
-  bc-breaks [options] [--] <mode> [<packages>]...
-
-Arguments:
-  mode                   Specify mode of changelog - current or new
-  packages               Names of packages to which write BC breaks. If no specified, writes changes in all packages.
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -a, --all              Write all changes instead of only BC breaks
-  -b, --branch=BRANCH    Write changes in specific branch only
-  -m, --meld             Run meld above both changelof mode directories
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- Typical usage:
-         nwc bc-break current	writes BC breakes of all packages in their current branches into the changelog/current/<packageName> directory
-         nwc bc c            	same as previous command, only in short syntax
-         nwc bc-break new    	writes BC breakes of all packages in theri current branches, but writes to changelog/new/<packageName> directory
-         nwc bc              	same as previous command, only in short syntax
-         nwc bc-break current nw7 nw7-util nw7-module 	 same as nwc bc-break current, but writes changes only for specified packages (inside lib/composer/inspire directory)
-
-
-
-
-
-
-nwc help branches
-Usage:
-  branches [options]
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- Prints current branches of inspire packages
-
-
-
-
-
-
-nwc help build
-Usage:
-  build [options] [--] [<project>] [<task>]
-
-Arguments:
-  project                    project (repository) name
-  task                       phing task to run [default: "build"]
-
-Options:
-      --pwd=PWD              set pwd to specified path
-  -f, --buildfile=BUILDFILE  use given buildfile [default: "/nodes/lib/nw7-console/build/build.xml"]
-      --dev                  build with latest package version (omitting tags, versions specified in composer.json/lock etc.)
-      --project-dev          build with latest project version, but stable package versions (based on composer.lock). Has lower priority than --dev
-  -h, --help                 Display this help message
-  -q, --quiet                Do not output any message
-  -V, --version              Display this application version
-      --ansi                 Force ANSI output
-      --no-ansi              Disable ANSI output
-  -n, --no-interaction       Do not ask any interactive question
-  -v|vv|vvv, --verbose       Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- Builds project artifact (runner for phing)
-
-
-
-
-
-
-nwc help build-media
-Usage:
-  build-media [options]
-
-Options:
-      --pwd=PWD         set pwd to specified path
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- build media directory using r.js
-
-
-
-
-
-
-nwc help changes
-Usage:
-  changes [options]
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -o, --outgoing         Check also for commited outgoing (not pushed) changes
-  -a, --all              Show all changes - print colored list of changes for each package
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- Checks for changes in inspire composer packages (located in /lib/composer/inspire/*)
-
-
-
-
-
-
-nwc help clean-temp
-Usage:
-  clean-temp [options] [--] [<type>]
-
-Arguments:
-  type                   Type of temp directory to clean [default: "!"]
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -d, --dump-autoloader  Also dump autoloader after cleaning files
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- clean-temp cleans temporary files located in projectdir/app/temp. Usage:
-
-
-
-
-
-
-nwc help clone
-Usage:
-  clone [options] [--] <project>
-
-Arguments:
-  project                        Project name to clone (repository name)
-
-Options:
-  -d, --destination=DESTINATION  Destination path, where to clone repository
-  -l, --link-packages            After clone link all packages to user shared directory
-  -r, --rev=REV                  Clone to selected project revision
-  -h, --help                     Display this help message
-  -q, --quiet                    Do not output any message
-  -V, --version                  Display this application version
-      --ansi                     Force ANSI output
-      --no-ansi                  Disable ANSI output
-  -n, --no-interaction           Do not ask any interactive question
-  -v|vv|vvv, --verbose           Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- clone usage:
-             nwc clone nw7-project                    Clones project nw7-project into ~/www/nw7-project
-             nwc clone nw7-project -d ~/some-dir -l   Clones project nw7-project into ~/some-dir and link packages
-
-
-
-
-
-
-nwc help close-branch
-Usage:
-  close-branch [options] [--] [<branch>]
-
-Arguments:
-  branch                           name of branch that will be merged and closed (empty = current branch)
-
-Options:
-      --pwd=PWD                    set pwd to specified path
-  -m, --merge-branch=MERGE-BRANCH  target branch that will be current branch merged to [default: "default"]
-      --no-merge                   do not merge after close
-  -h, --help                       Display this help message
-  -q, --quiet                      Do not output any message
-  -V, --version                    Display this application version
-      --ansi                       Force ANSI output
-      --no-ansi                    Disable ANSI output
-  -n, --no-interaction             Do not ask any interactive question
-  -v|vv|vvv, --verbose             Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- Switch to specified branch (or use current if no branch specified), merge branch to default (or to specified merge-branch) and close it.
-
-
-
-
-
-
-nwc help commit
-Usage:
-  commit [options]
-
-Options:
-  -t, --tag             Auto tag to next version after commit
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- hg commit shortuct, with auto-detection of user's prefix
-
-
-
-
-
-
-nwc help commit-packages
-Usage:
-  commit-packages [options]
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- hg commit shortuct above project's inspire packages, with auto-detection of user's prefix
-
-
-
-
-
-
-nwc help deploy
-Usage:
-  deploy [options] [--] [<project>] [<server>]
-
-Arguments:
-  project                              Project (directory) to deploy
-  server                               Server to deploy to - one of nw, sh1, user [default: "sh1"]
-
-Options:
-      --pwd=PWD                        set pwd to specified path
-      --ask                            Ask before running each server command
-      --force-dest-dir=FORCE-DEST-DIR  Force change remote destination directory
-      --force-url=FORCE-URL            Force change remote base URL
-  -r, --revert                         Do revert of recently deployed project
-  -d, --dev-copy                       Mark build as developer copy (to fix it after deploy)
-  -h, --help                           Display this help message
-  -q, --quiet                          Do not output any message
-  -V, --version                        Display this application version
-      --ansi                           Force ANSI output
-      --no-ansi                        Disable ANSI output
-  -n, --no-interaction                 Do not ask any interactive question
-  -v|vv|vvv, --verbose                 Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- deploys given folder to remote server
-
-
-
-
-
-
-nwc help deploy-copy
-Usage:
-  deploy-copy [options]
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- Deploys current project state to testing server
-
-
-
-
-
-
-nwc help dom-binder-loader
-Usage:
-  dom-binder-loader [options]
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- dom-binder-loader find all Dom.js files and generates DomBinderLoader.coffee definition (in /asset/js/app/DomBinderLoader.coffee)
-
-
-
-
-
-
-nwc help dump-autoload
-Usage:
-  dump-autoload [options]
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -o, --optimize         Optimize dumped autoloader
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- dump-autoload dumps and writes project's Composer autoloader.
-
-
-
-
-
-
-nwc help echo
-Usage:
-  echo [options] [--] [<parameter>] [<value>]...
-
-Arguments:
-  parameter              type of rewritten file
-  value                  Parameter specific value
-
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- echo command echoes project dependent informations (project root path, path to project packate etc.)
- 
- package-dir	 path to package
- project-path	 path to project root
- nwc-dir	 dir where nwc is running from
- last-tag-rev	 revision number of latest tag
+nwc _completion
+  Usage:
+    _completion [options]
+
+  Options:
+    -g, --generate-hook    Generate BASH code that sets up completion for this application.
+    -p, --program=PROGRAM  Program name that should trigger completion
+                                        (defaults to the absolute application path).
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   To enable BASH completion, run:
+   
+       eval `[program] _completion -g`.
+   
+   Or for an alias:
+   
+       eval `[program] _completion -g -p [alias]`.
  
 
 
@@ -458,1008 +29,1437 @@ Help:
 
 
 
-nwc help extensions
-Usage:
-  extensions [options] [--] [<action>]
+nwc add
+  Usage:
+    add [options]
 
-Arguments:
-  action                 Action (one of: show, verify, enable, remove, format, disable)
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-Help:
- extensions command for manipulation with project extension.neon configuration
+  Help:
+   Adds package of specified type into project, using interactive dialog
 
 
 
 
 
 
-nwc help generate-entity
-Usage:
-  generate-entity [options] [--] [<output>] [<module>]
+nwc bc-breaks
+  Usage:
+    bc-breaks [options] [--] <mode> [<packages>]...
 
-Arguments:
-  output                 Output directory for entities
-  module                 Backend module form old NW redaction system
+  Arguments:
+    mode                   Specify mode of changelog - current or new
+    packages               Names of packages to which write BC breaks. If no specified, writes changes in all packages.
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -m, --without-manager  Do not generate manager
-  -1, --single-entity    Generate only selected entity, not referencing
-      --db=DB            Select another database (hostname - like "bart" or "ocko" or IP address)
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -a, --all              Write all changes instead of only BC breaks
+    -b, --branch=BRANCH    Write changes in specific branch only
+    -m, --meld             Run meld above both changelof mode directories
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- generate-entity generates NW7 entities from NW6 RS
+  Help:
+   Typical usage:
+           nwc bc-break current	writes BC breakes of all packages in their current branches into the changelog/current/<packageName> directory
+           nwc bc c            	same as previous command, only in short syntax
+           nwc bc-break new    	writes BC breakes of all packages in theri current branches, but writes to changelog/new/<packageName> directory
+           nwc bc              	same as previous command, only in short syntax
+           nwc bc-break current nw7 nw7-util nw7-module 	 same as nwc bc-break current, but writes changes only for specified packages (inside lib/composer/inspire directory)
 
 
 
 
 
 
-nwc help help
-Usage:
-  help [options] [--] [<command_name>]
+nwc branches
+  Usage:
+    branches [options]
 
-Arguments:
-  command               The command to execute
-  command_name          The command name [default: "help"]
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Options:
-      --xml             To output help as XML
-      --format=FORMAT   The output format (txt, xml, json, or md) [default: "txt"]
-      --raw             To output raw command help
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Help:
+   Prints current branches of inspire packages
 
-Help:
- The help command displays help for a given command:
+
+
+
+
+
+nwc build
+  Usage:
+    build [options] [--] [<project>] [<task>]
+
+  Arguments:
+    project                    project (repository) name
+    task                       phing task to run [default: "build"]
+
+  Options:
+        --pwd=PWD              set pwd to specified path
+    -f, --buildfile=BUILDFILE  use given buildfile [default: "/nodes/lib/nw7-console/build/build.xml"]
+        --dev                  build with latest package version (omitting tags, versions specified in composer.json/lock etc.)
+        --project-dev          build with latest project version, but stable package versions (based on composer.lock). Has lower priority than --dev
+    -h, --help                 Display this help message
+    -q, --quiet                Do not output any message
+    -V, --version              Display this application version
+        --ansi                 Force ANSI output
+        --no-ansi              Disable ANSI output
+    -n, --no-interaction       Do not ask any interactive question
+    -v|vv|vvv, --verbose       Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   Builds project artifact (runner for phing)
+
+
+
+
+
+
+nwc build-media
+  Usage:
+    build-media [options]
+
+  Options:
+        --pwd=PWD         set pwd to specified path
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   build media directory using r.js
+
+
+
+
+
+
+nwc changes
+  Usage:
+    changes [options]
+
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -o, --outgoing         Check also for commited outgoing (not pushed) changes
+    -a, --all              Show all changes - print colored list of changes for each package
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   Checks for changes in inspire composer packages (located in /lib/composer/inspire/*)
+
+
+
+
+
+
+nwc clean-temp
+  Usage:
+    clean-temp [options] [--] [<type>]
+
+  Arguments:
+    type                   Type of temp directory to clean [default: "!"]
+
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -d, --dump-autoloader  Also dump autoloader after cleaning files
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   clean-temp cleans temporary files located in projectdir/app/temp. Usage:
+
+
+
+
+
+
+nwc clone
+  Usage:
+    clone [options] [--] <project>
+
+  Arguments:
+    project                        Project name to clone (repository name)
+
+  Options:
+    -d, --destination=DESTINATION  Destination path, where to clone repository
+    -l, --link-packages            After clone link all packages to user shared directory
+    -r, --rev=REV                  Clone to selected project revision
+    -h, --help                     Display this help message
+    -q, --quiet                    Do not output any message
+    -V, --version                  Display this application version
+        --ansi                     Force ANSI output
+        --no-ansi                  Disable ANSI output
+    -n, --no-interaction           Do not ask any interactive question
+    -v|vv|vvv, --verbose           Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   clone usage:
+               nwc clone nw7-project                    Clones project nw7-project into ~/www/nw7-project
+               nwc clone nw7-project -d ~/some-dir -l   Clones project nw7-project into ~/some-dir and link packages
+
+
+
+
+
+
+nwc close-branch
+  Usage:
+    close-branch [options] [--] [<branch>]
+
+  Arguments:
+    branch                           name of branch that will be merged and closed (empty = current branch)
+
+  Options:
+        --pwd=PWD                    set pwd to specified path
+    -m, --merge-branch=MERGE-BRANCH  target branch that will be current branch merged to [default: "default"]
+        --no-merge                   do not merge after close
+    -h, --help                       Display this help message
+    -q, --quiet                      Do not output any message
+    -V, --version                    Display this application version
+        --ansi                       Force ANSI output
+        --no-ansi                    Disable ANSI output
+    -n, --no-interaction             Do not ask any interactive question
+    -v|vv|vvv, --verbose             Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   Switch to specified branch (or use current if no branch specified), merge branch to default (or to specified merge-branch) and close it.
+
+
+
+
+
+
+nwc commit
+  Usage:
+    commit [options]
+
+  Options:
+    -t, --tag             Auto tag to next version after commit
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   hg commit shortuct, with auto-detection of user's prefix
+
+
+
+
+
+
+nwc commit-packages
+  Usage:
+    commit-packages [options]
+
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   hg commit shortuct above project's inspire packages, with auto-detection of user's prefix
+
+
+
+
+
+
+nwc deploy
+  Usage:
+    deploy [options] [--] [<project>] [<server>]
+
+  Arguments:
+    project                              Project (directory) to deploy
+    server                               Server to deploy to - one of nw, sh1, user [default: "sh1"]
+
+  Options:
+        --pwd=PWD                        set pwd to specified path
+        --ask                            Ask before running each server command
+        --force-dest-dir=FORCE-DEST-DIR  Force change remote destination directory
+        --force-url=FORCE-URL            Force change remote base URL
+    -r, --revert                         Do revert of recently deployed project
+    -d, --dev-copy                       Mark build as developer copy (to fix it after deploy)
+    -h, --help                           Display this help message
+    -q, --quiet                          Do not output any message
+    -V, --version                        Display this application version
+        --ansi                           Force ANSI output
+        --no-ansi                        Disable ANSI output
+    -n, --no-interaction                 Do not ask any interactive question
+    -v|vv|vvv, --verbose                 Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   deploys given folder to remote server
+
+
+
+
+
+
+nwc deploy-copy
+  Usage:
+    deploy-copy [options]
+
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   Deploys current project state to testing server
+
+
+
+
+
+
+nwc dom-binder-loader
+  Usage:
+    dom-binder-loader [options]
+
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   dom-binder-loader find all Dom.js files and generates DomBinderLoader.coffee definition (in /asset/js/app/DomBinderLoader.coffee)
+
+
+
+
+
+
+nwc dump-autoload
+  Usage:
+    dump-autoload [options]
+
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -o, --optimize         Optimize dumped autoloader
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   dump-autoload dumps and writes project's Composer autoloader.
+
+
+
+
+
+
+nwc echo
+  Usage:
+    echo [options] [--] [<parameter>] [<value>]...
+
+  Arguments:
+    parameter              type of rewritten file
+    value                  Parameter specific value
+
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   echo command echoes project dependent informations (project root path, path to project packate etc.)
+   
+   package-dir	 path to package
+   project-path	 path to project root
+   nwc-dir	 dir where nwc is running from
+   last-tag-rev	 revision number of latest tag
  
-   php /server/bin/nwc help list
- 
- You can also output the help in other formats by using the --format option:
- 
-   php /server/bin/nwc help --format=xml list
- 
- To display the list of available commands, please use the list command.
 
 
 
 
 
 
-nwc help init-project
-Usage:
-  init-project [options] [--] <repository-name>
+nwc extensions
+  Usage:
+    extensions [options] [--] [<action>]
 
-Arguments:
-  repository-name            Repository name, which will be associated with newly created project
+  Arguments:
+    action                 Action (one of: show, verify, enable, remove, format, disable)
 
-Options:
-      --init-repo=INIT-REPO  Init-repo name [default: "_nw-7-init-repo"]
-  -h, --help                 Display this help message
-  -q, --quiet                Do not output any message
-  -V, --version              Display this application version
-      --ansi                 Force ANSI output
-      --no-ansi              Disable ANSI output
-  -n, --no-interaction       Do not ask any interactive question
-  -v|vv|vvv, --verbose       Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- init-project creates and initializes new project
+  Help:
+   extensions command for manipulation with project extension.neon configuration
 
 
 
 
 
 
-nwc help install
-Usage:
-  install [options]
+nwc generate-entity
+  Usage:
+    generate-entity [options] [--] [<output>] [<module>]
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Arguments:
+    output                 Output directory for entities
+    module                 Backend module form old NW redaction system
 
-Help:
- install is alias for composer's install command - installs packages defined in composer.lock file (or composer.json, if lock file is not present)
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -m, --without-manager  Do not generate manager
+    -1, --single-entity    Generate only selected entity, not referencing
+        --db=DB            Select another database (hostname - like "bart" or "ocko" or IP address)
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   generate-entity generates NW7 entities from NW6 RS
 
 
 
 
 
-nwc help last-tag-modifications
-Usage:
-  last-tag-modifications [options]
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+nwc help
+  Usage:
+    help [options] [--] [<command_name>]
 
-Help:
- Writes all changes on default since last tag above stable
+  Arguments:
+    command               The command to execute
+    command_name          The command name [default: "help"]
 
+  Options:
+        --xml             To output help as XML
+        --format=FORMAT   The output format (txt, xml, json, or md) [default: "txt"]
+        --raw             To output raw command help
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   The help command displays help for a given command:
+   
+     php /server/bin/nwc list
+   
+   You can also output the help in other formats by using the --format option:
+   
+     php /server/bin/nwc --format=xml list
+   
+   To display the list of available commands, please use the list command.
 
 
 
 
-nwc help link-packages
-Usage:
-  link-packages [options]
 
-Options:
-      --pwd=PWD                    set pwd to specified path
-  -p, --project=PROJECT            Choose project by name (directory name in your ~/www)
-      --user=USER                  Name of user - only when running under Apache
-  -l, --link-package=LINK-PACKAGE  Package name to link, empty to link all Inspire packages. [default: ["*"]] (multiple values allowed)
-  -f, --force-clone                Non-existing packages in ~/php/nw7-packages will be automatically cloned without asking.
-  -r, --force-rm                   Existing re-linked directories in /lib/composer/inspire will be automatically deleted without asking.
-  -m, --move                       Source package will be used as new content of shared package - will not clone, only move and create symlink.
-  -h, --help                       Display this help message
-  -q, --quiet                      Do not output any message
-  -V, --version                    Display this application version
-      --ansi                       Force ANSI output
-      --no-ansi                    Disable ANSI output
-  -n, --no-interaction             Do not ask any interactive question
-  -v|vv|vvv, --verbose             Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- link-packages creates symlinks from project's composer directory (/lib/composer/inspire/*) to user's php directory (in ~/php/nw7-packages/*). The original package (in project's composer vendor dir) will be removed.
+nwc init-project
+  Usage:
+    init-project [options] [--] <repository-name>
 
+  Arguments:
+    repository-name            Repository name, which will be associated with newly created project
 
+  Options:
+        --init-repo=INIT-REPO  Init-repo name [default: "_nw-7-init-repo"]
+    -h, --help                 Display this help message
+    -q, --quiet                Do not output any message
+    -V, --version              Display this application version
+        --ansi                 Force ANSI output
+        --no-ansi              Disable ANSI output
+    -n, --no-interaction       Do not ask any interactive question
+    -v|vv|vvv, --verbose       Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   init-project creates and initializes new project
 
 
 
-nwc help link-upload
-Usage:
-  link-upload [options]
 
-Options:
-      --pwd=PWD                      set pwd to specified path
-  -p, --project=PROJECT              Choose project by name (directory name in your ~/www)
-      --user=USER                    Name of user - only when running under Apache
-      --project-path[=PROJECT-PATH]  Base dir of project.
-  -h, --help                         Display this help message
-  -q, --quiet                        Do not output any message
-  -V, --version                      Display this application version
-      --ansi                         Force ANSI output
-      --no-ansi                      Disable ANSI output
-  -n, --no-interaction               Do not ask any interactive question
-  -v|vv|vvv, --verbose               Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- (Re)link upload to /nodes/netwings project directory
 
+nwc install
+  Usage:
+    install [options]
 
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   install is alias for composer's install command - installs packages defined in composer.lock file (or composer.json, if lock file is not present)
 
 
 
-nwc help list
-Usage:
-  list [options] [--] [<namespace>]
 
-Arguments:
-  namespace            The namespace name
 
-Options:
-      --xml            To output list as XML
-      --raw            To output raw command list
-      --format=FORMAT  The output format (txt, xml, json, or md) [default: "txt"]
 
-Help:
- The list command lists all commands:
- 
-   php /server/bin/nwc list
- 
- You can also display the commands for a specific namespace:
- 
-   php /server/bin/nwc list test
- 
- You can also output the information in other formats by using the --format option:
- 
-   php /server/bin/nwc list --format=xml
- 
- It's also possible to get raw list of commands (useful for embedding command runner):
- 
-   php /server/bin/nwc list --raw
+nwc last-tag-modifications
+  Usage:
+    last-tag-modifications [options]
 
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Writes all changes on default since last tag above stable
 
 
 
 
-nwc help locale
-Usage:
-  locale [options] [--] <action> [<lang>]
 
-Arguments:
-  action                         Action - one of dump, import
-  lang                           Language of target locale - two characters
 
-Options:
-      --pwd=PWD                  set pwd to specified path
-  -p, --project=PROJECT          Choose project by name (directory name in your ~/www)
-      --user=USER                Name of user - only when running under Apache
-      --srclang-ids=SRCLANG-IDS  Source locale for loading message IDs [default: "cs"]
-  -s, --srclang=SRCLANG          Source languages to use for generating original translation (default = cs) [default: ["cs"]] (multiple values allowed)
-  -f, --file=FILE                Specific file to dump (not all of them)
-  -h, --help                     Display this help message
-  -q, --quiet                    Do not output any message
-  -V, --version                  Display this application version
-      --ansi                     Force ANSI output
-      --no-ansi                  Disable ANSI output
-  -n, --no-interaction           Do not ask any interactive question
-  -v|vv|vvv, --verbose           Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+nwc link-packages
+  Usage:
+    link-packages [options]
 
-Help:
- Dumps translation .neon files to .csv files
+  Options:
+        --pwd=PWD                    set pwd to specified path
+    -p, --project=PROJECT            Choose project by name (directory name in your ~/www)
+        --user=USER                  Name of user - only when running under Apache
+    -l, --link-package=LINK-PACKAGE  Package name to link, empty to link all Inspire packages. [default: ["*"]] (multiple values allowed)
+    -f, --force-clone                Non-existing packages in ~/php/nw7-packages will be automatically cloned without asking.
+    -r, --force-rm                   Existing re-linked directories in /lib/composer/inspire will be automatically deleted without asking.
+    -m, --move                       Source package will be used as new content of shared package - will not clone, only move and create symlink.
+    -h, --help                       Display this help message
+    -q, --quiet                      Do not output any message
+    -V, --version                    Display this application version
+        --ansi                       Force ANSI output
+        --no-ansi                    Disable ANSI output
+    -n, --no-interaction             Do not ask any interactive question
+    -v|vv|vvv, --verbose             Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   link-packages creates symlinks from project's composer directory (/lib/composer/inspire/*) to user's php directory (in ~/php/nw7-packages/*). The original package (in project's composer vendor dir) will be removed.
 
 
 
 
 
-nwc help make-project
-Usage:
-  make-project [options] [--] <project-name>
 
-Arguments:
-  project-name                                 name of the project
+nwc link-upload
+  Usage:
+    link-upload [options]
 
-Options:
-  -s, --skip-db-init                           Skip DB initialization
-      --db-template=DB-TEMPLATE                Database template [default: "nw7_db_template"]
-      --project-template=PROJECT-TEMPLATE      Init repo name [default: "_nw-7-init-repo"]
-      --source-upload-dir[=SOURCE-UPLOAD-DIR]  Source upload dir, which will be copied to project folder in /nodes/netwings.
-  -h, --help                                   Display this help message
-  -q, --quiet                                  Do not output any message
-  -V, --version                                Display this application version
-      --ansi                                   Force ANSI output
-      --no-ansi                                Disable ANSI output
-  -n, --no-interaction                         Do not ask any interactive question
-  -v|vv|vvv, --verbose                         Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD                      set pwd to specified path
+    -p, --project=PROJECT              Choose project by name (directory name in your ~/www)
+        --user=USER                    Name of user - only when running under Apache
+        --project-path[=PROJECT-PATH]  Base dir of project.
+    -h, --help                         Display this help message
+    -q, --quiet                        Do not output any message
+    -V, --version                      Display this application version
+        --ansi                         Force ANSI output
+        --no-ansi                      Disable ANSI output
+    -n, --no-interaction               Do not ask any interactive question
+    -v|vv|vvv, --verbose               Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- make-project runs interactive wizard to prepare arguments for scripts /server/bin/createNw7Db.py and /server/bin/mkproject
+  Help:
+   (Re)link upload to /nodes/netwings project directory
 
 
 
 
 
 
-nwc help make-text-web
-Usage:
-  make-text-web [options] [--] <project>
+nwc list
+  Usage:
+    list [options] [--] [<namespace>]
 
-Arguments:
-  project               project name
+  Arguments:
+    namespace            The namespace name
 
-Options:
-      --pwd=PWD         set pwd to specified path
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --xml            To output list as XML
+        --raw            To output raw command list
+        --format=FORMAT  The output format (txt, xml, json, or md) [default: "txt"]
 
-Help:
- Create new project based on nw7-text-web template.
+  Help:
+   The list command lists all commands:
+   
+     php /server/bin/nwc list
+   
+   You can also display the commands for a specific namespace:
+   
+     php /server/bin/nwc list test
+   
+   You can also output the information in other formats by using the --format option:
+   
+     php /server/bin/nwc list --format=xml
+   
+   It's also possible to get raw list of commands (useful for embedding command runner):
+   
+     php /server/bin/nwc list --raw
 
 
 
 
 
 
-nwc help media
-Usage:
-  media [options] [--] [<action>] [<url-or-type>]
+nwc locale
+  Usage:
+    locale [options] [--] <action> [<lang>]
 
-Arguments:
-  action                    Action to do - link url or clear all links. One of: link, js-link, css-link, img-link, font-link, clear, clear-and-link [default: "clear-and-link"]
-  url-or-type               URL (or file type) of file that will be linked into media directory
+  Arguments:
+    action                         Action - one of dump, import
+    lang                           Language of target locale - two characters
 
-Options:
-      --pwd=PWD             set pwd to specified path
-  -p, --project=PROJECT     Choose project by name (directory name in your ~/www)
-      --user=USER           Name of user - only when running under Apache
-  -d, --devel               build media for development. Optimizer is not triggered.
-  -f, --force-production    build media for production, regardless user configuration.
-  -c, --compile-missing-cs  compile only missing coffee files to JS files (not all of them)
-  -h, --help                Display this help message
-  -q, --quiet               Do not output any message
-  -V, --version             Display this application version
-      --ansi                Force ANSI output
-      --no-ansi             Disable ANSI output
-  -n, --no-interaction      Do not ask any interactive question
-  -v|vv|vvv, --verbose      Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD                  set pwd to specified path
+    -p, --project=PROJECT          Choose project by name (directory name in your ~/www)
+        --user=USER                Name of user - only when running under Apache
+        --srclang-ids=SRCLANG-IDS  Source locale for loading message IDs [default: "cs"]
+    -s, --srclang=SRCLANG          Source languages to use for generating original translation (default = cs) [default: ["cs"]] (multiple values allowed)
+    -f, --file=FILE                Specific file to dump (not all of them)
+    -h, --help                     Display this help message
+    -q, --quiet                    Do not output any message
+    -V, --version                  Display this application version
+        --ansi                     Force ANSI output
+        --no-ansi                  Disable ANSI output
+    -n, --no-interaction           Do not ask any interactive question
+    -v|vv|vvv, --verbose           Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- media usage: 
-         nwc media url [URL]         links file given by URL into media directory 
-         nwc media link              links all linkable files (CSS, JS, fonts and images)
-         nwc media js-link           links JS files (all of them)
-         nwc media css-link          links CSS files (all of them)
-         nwc media img-link          links images (all of them)
-         nwc media font-link         links images (all of them)
-         nwc media clear             clears all files in media directory
+  Help:
+   Dumps translation .neon files to .csv files
 
 
 
 
 
 
-nwc help packages
-Usage:
-  packages [options]
+nwc make-project
+  Usage:
+    make-project [options] [--] <project-name>
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -r, --hg-revisions     Show also hg revisions (a little bit slower)
-  -i, --inspire-only     Show only Inspire packages
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Arguments:
+    project-name                                 name of the project
 
-Help:
- packages dump composer (and hg revisions) of installed packages
+  Options:
+    -s, --skip-db-init                           Skip DB initialization
+        --db-template=DB-TEMPLATE                Database template [default: "nw7_db_template"]
+        --project-template=PROJECT-TEMPLATE      Init repo name [default: "_nw-7-init-repo"]
+        --source-upload-dir[=SOURCE-UPLOAD-DIR]  Source upload dir, which will be copied to project folder in /nodes/netwings.
+    -h, --help                                   Display this help message
+    -q, --quiet                                  Do not output any message
+    -V, --version                                Display this application version
+        --ansi                                   Force ANSI output
+        --no-ansi                                Disable ANSI output
+    -n, --no-interaction                         Do not ask any interactive question
+    -v|vv|vvv, --verbose                         Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   make-project runs interactive wizard to prepare arguments for scripts /server/bin/createNw7Db.py and /server/bin/mkproject
 
 
 
 
 
-nwc help prepare-stable
-Usage:
-  prepare-stable [options]
 
-Options:
-      --pwd=PWD         set pwd to specified path
-  -t, --tag             Tag after merge default to stable
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+nwc make-text-web
+  Usage:
+    make-text-web [options] [--] <project>
 
-Help:
- Shortcut for merge default to stable, commit, optionally tag and merge changes back to default
+  Arguments:
+    project               project name
 
+  Options:
+        --pwd=PWD         set pwd to specified path
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Create new project based on nw7-text-web template.
 
 
 
 
-nwc help remove-source-map
-Usage:
-  remove-source-map [options]
 
-Options:
-      --pwd=PWD         set pwd to specified path
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- rsync given directory to server
+nwc media
+  Usage:
+    media [options] [--] [<action>] [<url-or-type>]
 
+  Arguments:
+    action                    Action to do - link url or clear all links. One of: link, js-link, css-link, img-link, font-link, clear, clear-and-link [default: "clear-and-link"]
+    url-or-type               URL (or file type) of file that will be linked into media directory
 
+  Options:
+        --pwd=PWD             set pwd to specified path
+    -p, --project=PROJECT     Choose project by name (directory name in your ~/www)
+        --user=USER           Name of user - only when running under Apache
+    -d, --devel               build media for development. Optimizer is not triggered.
+    -f, --force-production    build media for production, regardless user configuration.
+    -c, --compile-missing-cs  compile only missing coffee files to JS files (not all of them)
+    -h, --help                Display this help message
+    -q, --quiet               Do not output any message
+    -V, --version             Display this application version
+        --ansi                Force ANSI output
+        --no-ansi             Disable ANSI output
+    -n, --no-interaction      Do not ask any interactive question
+    -v|vv|vvv, --verbose      Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   media usage: 
+           nwc media url [URL]         links file given by URL into media directory 
+           nwc media link              links all linkable files (CSS, JS, fonts and images)
+           nwc media js-link           links JS files (all of them)
+           nwc media css-link          links CSS files (all of them)
+           nwc media img-link          links images (all of them)
+           nwc media font-link         links images (all of them)
+           nwc media clear             clears all files in media directory
 
 
 
-nwc help require-js-mapping
-Usage:
-  require-js-mapping [options]
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- require-js-mapping re-generates requireJs mapping configuration.
 
+nwc packages
+  Usage:
+    packages [options]
 
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -r, --hg-revisions     Show also hg revisions (a little bit slower)
+    -i, --inspire-only     Show only Inspire packages
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   packages dump composer (and hg revisions) of installed packages
 
 
 
-nwc help rewrite
-Usage:
-  rewrite [options] [--] <type> [<source>]...
 
-Arguments:
-  type                   type of rewritten file (one of: setting, template, config, presenter, translation, php)
-  source                 destination file or folder to be rewritten
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- rewrite rewrites inspire package template or setting.neon file on project
+nwc prepare-stable
+  Usage:
+    prepare-stable [options]
 
+  Options:
+        --pwd=PWD         set pwd to specified path
+    -t, --tag             Tag after merge default to stable
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Shortcut for merge default to stable, commit, optionally tag and merge changes back to default
 
 
 
 
-nwc help rewrite-config
-Usage:
-  rewrite-config [options] [--] <source> (<source>)...
 
-Arguments:
-  source                 Files to overwrite
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -f, --force-rewrite    Force rewrite existing file
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+nwc remove-source-map
+  Usage:
+    remove-source-map [options]
 
-Help:
- rewrite-config rewrites given files in inspire package to project file
+  Options:
+        --pwd=PWD         set pwd to specified path
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   rsync given directory to server
 
 
 
 
 
-nwc help rewrite-php
-Usage:
-  rewrite-php [options] [--] <source> (<source>)...
 
-Arguments:
-  source                 Files to overwrite
+nwc require-js-mapping
+  Usage:
+    require-js-mapping [options]
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -f, --force-rewrite    Force rewrite existing file
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- rewrite-php rewrites given files in inspire package to project file
+  Help:
+   require-js-mapping re-generates requireJs mapping configuration.
 
 
 
 
 
 
-nwc help rewrite-presenter
-Usage:
-  rewrite-presenter [options] [--] <source> (<source>)...
+nwc rewrite
+  Usage:
+    rewrite [options] [--] <type> [<source>]...
 
-Arguments:
-  source                 Files to overwrite
+  Arguments:
+    type                   type of rewritten file (one of: setting, template, config, presenter, translation, php)
+    source                 destination file or folder to be rewritten
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -f, --force-rewrite    Force rewrite existing file
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- rewrite-presenter rewrites given files in inspire package to project file
+  Help:
+   rewrite rewrites inspire package template or setting.neon file on project
 
 
 
 
 
 
-nwc help rewrite-setting
-Usage:
-  rewrite-setting [options] [--] <source> (<source>)...
+nwc rewrite-config
+  Usage:
+    rewrite-config [options] [--] <source> (<source>)...
 
-Arguments:
-  source                 Files to overwrite
+  Arguments:
+    source                 Files to overwrite
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -f, --force-rewrite    Force rewrite existing file
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -f, --force-rewrite    Force rewrite existing file
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- rewrite-setting rewrites given files in inspire package to project file
+  Help:
+   rewrite-config rewrites given files in inspire package to project file
 
 
 
 
 
 
-nwc help rewrite-template
-Usage:
-  rewrite-template [options] [--] <source> (<source>)...
+nwc rewrite-php
+  Usage:
+    rewrite-php [options] [--] <source> (<source>)...
 
-Arguments:
-  source                 Files to overwrite
+  Arguments:
+    source                 Files to overwrite
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -f, --force-rewrite    Force rewrite existing file
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -f, --force-rewrite    Force rewrite existing file
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- rewrite-template Rewrites given template(s) from inspire package to project
+  Help:
+   rewrite-php rewrites given files in inspire package to project file
 
 
 
 
 
 
-nwc help rewrite-translation
-Usage:
-  rewrite-translation [options] [--] <source> (<source>)...
+nwc rewrite-presenter
+  Usage:
+    rewrite-presenter [options] [--] <source> (<source>)...
 
-Arguments:
-  source                 Files to overwrite
+  Arguments:
+    source                 Files to overwrite
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -f, --force-rewrite    Force rewrite existing file
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -f, --force-rewrite    Force rewrite existing file
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- rewrite-translation rewrites given files in inspire package to project file
+  Help:
+   rewrite-presenter rewrites given files in inspire package to project file
 
 
 
 
 
 
-nwc help run
-Usage:
-  run [options] [--] [<cmd>]
+nwc rewrite-setting
+  Usage:
+    rewrite-setting [options] [--] <source> (<source>)...
 
-Arguments:
-  cmd                    Command to run in every package
+  Arguments:
+    source                 Files to overwrite
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -c, --confirm          Stop and wait to confirm after single execution
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -f, --force-rewrite    Force rewrite existing file
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- Runs given command inside all package dirs
+  Help:
+   rewrite-setting rewrites given files in inspire package to project file
 
 
 
 
 
 
-nwc help satis
-Usage:
-  satis [<action>] [<repository>]
+nwc rewrite-template
+  Usage:
+    rewrite-template [options] [--] <source> (<source>)...
 
-Arguments:
-  action                Action (one of: add, remove, show, update)
-  repository            name of the repository ('nw7' or 'article-module' etc.)
+  Arguments:
+    source                 Files to overwrite
 
-Options:
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -f, --force-rewrite    Force rewrite existing file
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- satis allows you easily manipulate with with Satis-generated composer packages list.
+  Help:
+   rewrite-template Rewrites given template(s) from inspire package to project
 
 
 
 
 
 
-nwc help self-update
-Usage:
-  self-update [options]
+nwc rewrite-translation
+  Usage:
+    rewrite-translation [options] [--] <source> (<source>)...
 
-Options:
-      --pwd=PWD         set pwd to specified path
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Arguments:
+    source                 Files to overwrite
 
-Help:
- Updates NWC to latest revision
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -f, --force-rewrite    Force rewrite existing file
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   rewrite-translation rewrites given files in inspire package to project file
 
 
 
 
 
-nwc help session-init
-Usage:
-  session-init [options]
 
-Options:
-      --pwd=PWD                      set pwd to specified path
-  -p, --project=PROJECT              Choose project by name (directory name in your ~/www)
-      --user=USER                    Name of user - only when running under Apache
-  -d, --depth=DEPTH                  Depth recursion when creating directories. [default: 2]
-      --project-path[=PROJECT-PATH]  Base dir of project.
-  -h, --help                         Display this help message
-  -q, --quiet                        Do not output any message
-  -V, --version                      Display this application version
-      --ansi                         Force ANSI output
-      --no-ansi                      Disable ANSI output
-  -n, --no-interaction               Do not ask any interactive question
-  -v|vv|vvv, --verbose               Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+nwc run
+  Usage:
+    run [options] [--] [<cmd>]
 
-Help:
- Initilizes nested session directories
+  Arguments:
+    cmd                    Command to run in every package
 
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -c, --confirm          Stop and wait to confirm after single execution
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Runs given command inside all package dirs
 
 
 
 
-nwc help sql-dump
-Usage:
-  sql-dump [options] [--] [<database>]
 
-Arguments:
-  database              name of database
 
-Options:
-      --pwd=PWD         set pwd to specified path
-  -i, --import          import database
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+nwc satis
+  Usage:
+    satis [<action>] [<repository>]
 
-Help:
- Shortcut and simple-to-use wizard for running sqldump command
+  Arguments:
+    action                Action (one of: add, remove, show, update)
+    repository            name of the repository ('nw7' or 'article-module' etc.)
 
+  Options:
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   satis allows you easily manipulate with with Satis-generated composer packages list.
 
 
 
 
-nwc help switch-branches
-Usage:
-  switch-branches [options] [--] [<branch>]
 
-Arguments:
-  branch                 Branch to switch alle packages and project to [default: "default"]
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-      --pull             If branch was not found, try pull changes from remote repository and re-switch branch.
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+nwc self-update
+  Usage:
+    self-update [options]
 
-Help:
- Switch all packages and project to given branch (if exists)
+  Options:
+        --pwd=PWD         set pwd to specified path
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Updates NWC to latest revision
 
 
 
 
 
-nwc help tag-release
-Usage:
-  tag-release [options] [--] [<tag>]
 
-Arguments:
-  tag                   Set specific tag instead of auto-generated
+nwc session-init
+  Usage:
+    session-init [options]
 
-Options:
-  -f, --force-tag       Force tag - overwrite previous tag if already exists(see hg help tag)
-  -u, --push            Force push after adding tag
-  -r, --retag           Re-tag latest commit (does not add new tag, only moves latest tag)
-  -s, --satis-update    Update satis after push
-      --no-actions      Do not do anything else (push, update satis etc.)
-  -h, --help            Display this help message
-  -q, --quiet           Do not output any message
-  -V, --version         Display this application version
-      --ansi            Force ANSI output
-      --no-ansi         Disable ANSI output
-  -n, --no-interaction  Do not ask any interactive question
-  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Options:
+        --pwd=PWD                      set pwd to specified path
+    -p, --project=PROJECT              Choose project by name (directory name in your ~/www)
+        --user=USER                    Name of user - only when running under Apache
+    -d, --depth=DEPTH                  Depth recursion when creating directories. [default: 2]
+        --project-path[=PROJECT-PATH]  Base dir of project.
+    -h, --help                         Display this help message
+    -q, --quiet                        Do not output any message
+    -V, --version                      Display this application version
+        --ansi                         Force ANSI output
+        --no-ansi                      Disable ANSI output
+    -n, --no-interaction               Do not ask any interactive question
+    -v|vv|vvv, --verbose               Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- tag-release Automatically generates next patch version. Usage:
-         nwc tag-release            generates automatically next release tag, asks whether push changes and update satis
-         nwc tag-release -r         re-tag current comit with latest tag version
-         nwc tag-release v0.0.1     adds tag 'v0.0.1', asks whether push changes and update satis
-         nwc tag-release --push -s  generates automatically next release tag and asks whether update satis
-         nwc tag-release v0.0.1 -f  force adds tag 'v0.0.1' and asks whether update push changes and update satis
+  Help:
+   Initilizes nested session directories
 
 
 
 
 
 
-nwc help test
-Usage:
-  test [options]
+nwc sql-dump
+  Usage:
+    sql-dump [options] [--] [<database>]
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-      --filter=FILTER    Filter test cases to run
-  -C, --clean            Clear temp and vendor dir after test
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+  Arguments:
+    database              name of database
 
-Help:
- Run PHPUnit tests of current package - based on defined phpunit.xml. Optionall you can pass --filter arugment, which is passed to phpunit.xml (same behaviour)
+  Options:
+        --pwd=PWD         set pwd to specified path
+    -i, --import          import database
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Shortcut and simple-to-use wizard for running sqldump command
 
 
 
 
 
-nwc help test-all
-Usage:
-  test-all [options]
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+nwc switch-branches
+  Usage:
+    switch-branches [options] [--] [<branch>]
 
-Help:
- Run PHPUnit tests of all packages
+  Arguments:
+    branch                 Branch to switch alle packages and project to [default: "default"]
 
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+        --pull             If branch was not found, try pull changes from remote repository and re-switch branch.
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Switch all packages and project to given branch (if exists)
 
 
 
 
-nwc help unlink-packages
-Usage:
-  unlink-packages [options]
 
-Options:
-      --pwd=PWD                     set pwd to specified path
-  -p, --project=PROJECT             Choose project by name (directory name in your ~/www)
-      --user=USER                   Name of user - only when running under Apache
-  -h, --help                        Display this help message
-  -q, --quiet                       Do not output any message
-  -V, --version                     Display this application version
-      --ansi                        Force ANSI output
-      --no-ansi                     Disable ANSI output
-  -n, --no-interaction              Do not ask any interactive question
-  -pn, --package-name=PACKAGE-NAME  Package name to restore, asterisk (*) to fetch all Inspire packages. [default: ["*"]] (multiple values allowed)
-  -v|vv|vvv, --verbose              Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- unlink-packages Removes symlinks from project's composer directory (/lib/composer/inspire/*) and re-fetches original composer packages.
+nwc tag-release
+  Usage:
+    tag-release [options] [--] [<tag>]
 
+  Arguments:
+    tag                   Set specific tag instead of auto-generated
 
+  Options:
+    -f, --force-tag       Force tag - overwrite previous tag if already exists(see hg help tag)
+    -u, --push            Force push after adding tag
+    -r, --retag           Re-tag latest commit (does not add new tag, only moves latest tag)
+    -s, --satis-update    Update satis after push
+        --no-actions      Do not do anything else (push, update satis etc.)
+    -h, --help            Display this help message
+    -q, --quiet           Do not output any message
+    -V, --version         Display this application version
+        --ansi            Force ANSI output
+        --no-ansi         Disable ANSI output
+    -n, --no-interaction  Do not ask any interactive question
+    -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   tag-release Automatically generates next patch version. Usage:
+           nwc tag-release            generates automatically next release tag, asks whether push changes and update satis
+           nwc tag-release -r         re-tag current comit with latest tag version
+           nwc tag-release v0.0.1     adds tag 'v0.0.1', asks whether push changes and update satis
+           nwc tag-release --push -s  generates automatically next release tag and asks whether update satis
+           nwc tag-release v0.0.1 -f  force adds tag 'v0.0.1' and asks whether update push changes and update satis
 
 
 
-nwc help update
-Usage:
-  update [options]
 
-Options:
-      --pwd=PWD          set pwd to specified path
-  -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
-      --user=USER        Name of user - only when running under Apache
-      --dev-media        Build media for development
-      --reset            Reset packages to their locked version
-  -h, --help             Display this help message
-  -q, --quiet            Do not output any message
-  -V, --version          Display this application version
-      --ansi             Force ANSI output
-      --no-ansi          Disable ANSI output
-  -n, --no-interaction   Do not ask any interactive question
-  -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- Updates while project (if no package specified) or to latest stable tag.
 
+nwc test
+  Usage:
+    test [options]
 
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+        --filter=FILTER    Filter test cases to run
+    -C, --clean            Clear temp and vendor dir after test
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Run PHPUnit tests of current package - based on defined phpunit.xml. Optionall you can pass --filter arugment, which is passed to phpunit.xml (same behaviour)
 
 
 
-nwc help update-packages
-Usage:
-  update-packages [options]
 
-Options:
-      --pwd=PWD                        set pwd to specified path
-  -p, --project=PROJECT                Choose project by name (directory name in your ~/www)
-      --user=USER                      Name of user - only when running under Apache
-      --tracy                          update also tracy/tracy package
-  -b, --default-branch=DEFAULT-BRANCH  use given branch instead of default [default: "default"]
-  -h, --help                           Display this help message
-  -q, --quiet                          Do not output any message
-  -V, --version                        Display this application version
-      --ansi                           Force ANSI output
-      --no-ansi                        Disable ANSI output
-  -n, --no-interaction                 Do not ask any interactive question
-  -v|vv|vvv, --verbose                 Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- hg update & hg pull shortuct above project's inspire packages
 
+nwc test-all
+  Usage:
+    test-all [options]
 
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+  Help:
+   Run PHPUnit tests of all packages
 
 
 
-nwc help version
-Usage:
-  version [options]
 
-Options:
-      --pwd=PWD           set pwd to specified path
-  -p, --project=PROJECT   Choose project by name (directory name in your ~/www)
-      --user=USER         Name of user - only when running under Apache
-  -d, --date              Show date of last tag
-  -a, --all               Show versions of all installed NW7 packages
-  -c, --composer-compare  Compare/write expected revision (from composer.lock)
-  -h, --help              Display this help message
-  -q, --quiet             Do not output any message
-  -V, --version           Display this application version
-      --ansi              Force ANSI output
-      --no-ansi           Disable ANSI output
-  -n, --no-interaction    Do not ask any interactive question
-  -v|vv|vvv, --verbose    Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
-Help:
- version prints latest version of the package.
- Version is detected from latest tag in format v#.#.#
+
+nwc unlink-packages
+  Usage:
+    unlink-packages [options]
+
+  Options:
+        --pwd=PWD                     set pwd to specified path
+    -p, --project=PROJECT             Choose project by name (directory name in your ~/www)
+        --user=USER                   Name of user - only when running under Apache
+    -h, --help                        Display this help message
+    -q, --quiet                       Do not output any message
+    -V, --version                     Display this application version
+        --ansi                        Force ANSI output
+        --no-ansi                     Disable ANSI output
+    -n, --no-interaction              Do not ask any interactive question
+    -pn, --package-name=PACKAGE-NAME  Package name to restore, asterisk (*) to fetch all Inspire packages. [default: ["*"]] (multiple values allowed)
+    -v|vv|vvv, --verbose              Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   unlink-packages Removes symlinks from project's composer directory (/lib/composer/inspire/*) and re-fetches original composer packages.
+
+
+
+
+
+
+nwc update
+  Usage:
+    update [options]
+
+  Options:
+        --pwd=PWD          set pwd to specified path
+    -p, --project=PROJECT  Choose project by name (directory name in your ~/www)
+        --user=USER        Name of user - only when running under Apache
+        --dev-media        Build media for development
+        --reset            Reset packages to their locked version
+    -h, --help             Display this help message
+    -q, --quiet            Do not output any message
+    -V, --version          Display this application version
+        --ansi             Force ANSI output
+        --no-ansi          Disable ANSI output
+    -n, --no-interaction   Do not ask any interactive question
+    -v|vv|vvv, --verbose   Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   Updates while project (if no package specified) or to latest stable tag.
+
+
+
+
+
+
+nwc update-packages
+  Usage:
+    update-packages [options]
+
+  Options:
+        --pwd=PWD                        set pwd to specified path
+    -p, --project=PROJECT                Choose project by name (directory name in your ~/www)
+        --user=USER                      Name of user - only when running under Apache
+        --tracy                          update also tracy/tracy package
+    -b, --default-branch=DEFAULT-BRANCH  use given branch instead of default [default: "default"]
+    -h, --help                           Display this help message
+    -q, --quiet                          Do not output any message
+    -V, --version                        Display this application version
+        --ansi                           Force ANSI output
+        --no-ansi                        Disable ANSI output
+    -n, --no-interaction                 Do not ask any interactive question
+    -v|vv|vvv, --verbose                 Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   hg update & hg pull shortuct above project's inspire packages
+
+
+
+
+
+
+nwc version
+  Usage:
+    version [options]
+
+  Options:
+        --pwd=PWD           set pwd to specified path
+    -p, --project=PROJECT   Choose project by name (directory name in your ~/www)
+        --user=USER         Name of user - only when running under Apache
+    -d, --date              Show date of last tag
+    -a, --all               Show versions of all installed NW7 packages
+    -c, --composer-compare  Compare/write expected revision (from composer.lock)
+    -h, --help              Display this help message
+    -q, --quiet             Do not output any message
+    -V, --version           Display this application version
+        --ansi              Force ANSI output
+        --no-ansi           Disable ANSI output
+    -n, --no-interaction    Do not ask any interactive question
+    -v|vv|vvv, --verbose    Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+  Help:
+   version prints latest version of the package.
+   Version is detected from latest tag in format v#.#.#
