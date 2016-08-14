@@ -1,4 +1,5 @@
 # TODO exclude already present options (long and short) from autocompletion
+# module directories: ~/www/<proj>/admin/backend/mod_.*
 _nwc() {
     local cur prev words cword args
     _init_completion || return
@@ -192,17 +193,53 @@ _nwc() {
                         return
                         ;;
                     *)              optslocal="show verify enable remove format disable" ;;
+                    # *)
+                    #     local wordslocal="show verify enable remove format disable"
+                        # echo `_nwc_in_array $prev wordslocal`
+                        # if _nwc_in_array $prev wordslocal ; then 
+                        #     echo y
+                        # else
+                        #     echo n
+                        # fi
+                        # _nwc_in_array $prev wordslocal \
+                        #     && return \
+                        #     || optslocal=$wordslocal
+                        # _nwc_in_array $prev wordslocal && echo yes || echo no
+                        # ;;
+                esac
+            fi
+            ;;
+        generate-entity)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -m --without-manager -1 --single-entity --db --"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    *)
+                        if [[ -d $prev || $prev == "." ]]; then
+                            _nwc_complete_modules && return 0
+                        else
+                            _filedir -d && return 0
+                        fi
+                        ;;
+                esac
+            fi
+            ;;
+        help)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--xml --format --raw"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --format)   optslocal="txt xml json md" ;;
+                    *)          optslocal="${commands}" ;;
                 esac
             fi
             ;;
 # ---------------- TODO -------------- continue implementing below this line
-        generate-entity)        optslocal="--pwd -p --project --user -m --without-manager -1 --single-entity --db=" ;; # TODO
-        help)
-            optslocal="--xml --format --raw"
-            opts="${optslocal} ${optsglobal} ${commands}"
-            COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-            return 0
-            ;; # TODO
         init-project)           optslocal="--init-repo" ;; # TODO
         link-packages)          optslocal="--pwd -p --project --user -l --link-package -f --force-clone -r --force-rm -m --move" ;;
         link-upload)            optslocal="--pwd -p --project --user --project-path" ;;
@@ -295,6 +332,37 @@ _nwc_get_lastword() {
 }
 
 
+# _nwc_in_array() {
+#     local needle=$1
+#     local haystack="$2[@]"
+#     local found=1
+#     # for element in "${haystack[@]}"; do
+#     for element in "${!haystack}"; do
+#         if [[ $element == $needle ]]; then
+#             found=0
+#             break
+#         fi
+#     done
+#     return $found
+# }
+
+
+# _nwc_in_array_2() {
+#     local needle haystack i is_present
+#     needle=$1
+#     haystack="$2[@]"
+#     is_present=0
+#     for ((i = 1; i < ${#haystack[@]}; ++i)); do
+#         if [[ ${haystack[i]} == ${needle} ]]; then
+#             is_present=1
+#             break
+#         fi
+#     done
+#     # echo $is_present
+#     return ${is_present}
+# }
+
+
 _nwc_is_word_present() {
     local word i is_present
 
@@ -353,6 +421,32 @@ _nwc_complete_files() {
         _filedir
         popd >/dev/null
     }
+}
+
+
+_nwc_get_project_name() {
+    local cur_dir www_dir test_string proj_name
+    cur_dir=`pwd`/
+    www_dir="${HOME}/www"
+    [[ ! -d ${www_dir} ]] && return 1 ## no www dir in home
+    test_string="s#^${www_dir}/\([^/]*\)/.*#\1#"
+    proj_name=`echo ${cur_dir} | sed ${test_string}`
+    echo "${proj_name}"
+}
+
+
+_nwc_get_project_dir() {
+    local proj_name www_dir
+    www_dir="${HOME}/www"
+    [[ ! -d ${www_dir} ]] && return 1 ## no www dir in home
+    proj_name=`_nwc_get_project_name`
+    echo "${www_dir}/${proj_name}"
+}
+
+
+_nwc_complete_modules() {
+    local project_dir=`_nwc_get_project_dir`
+    _nwc_complete_dirs "${project_dir}/admin/backend/"
 }
 
 
