@@ -228,7 +228,7 @@ _nwc() {
                 esac
             fi
             ;;
-        help)
+        help|list)
             if [[ "${cur}" == -* ]]; then
                 optslocal="--xml --format --raw"
             else
@@ -239,14 +239,68 @@ _nwc() {
                 esac
             fi
             ;;
+        init-project)           optslocal="--init-repo" ;;
+        link-packages)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -l --link-package -f --force-clone -r --force-rm -m --move"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        link-upload)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user --project-path"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        locale)
+            if $(_nwc_is_word_present "dump") || $(_nwc_is_word_present "import") ; then
+                return 0
+            elif [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user --srclang-ids -s --srclang -f --file"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    -f)             _filedir && return 0 ;;
+                    *)              optslocal="dump import" ;;
+                esac
+            fi
+            ;;
+        make-project)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="-s --skip-db-init --db-template --project-template --source-upload-dir"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --source-upload-dir)    _filedir -d && return 0 ;;
+                esac
+            fi
+            ;;
+        make-text-web)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                esac
+            fi
+            ;;
 # ---------------- TODO -------------- continue implementing below this line
-        init-project)           optslocal="--init-repo" ;; # TODO
-        link-packages)          optslocal="--pwd -p --project --user -l --link-package -f --force-clone -r --force-rm -m --move" ;;
-        link-upload)            optslocal="--pwd -p --project --user --project-path" ;;
-        list)                   optslocal="--xml --raw --format" ;; # TODO
-        locale)                 optslocal="--pwd -p --project --user --srclang-ids -s --srclang -f --file" ;; # TODO
-        make-project)           optslocal="-s --skip-db-init --db-template --project-template --source-upload-dir" ;; # TODO
-        make-text-web)          optslocal="--pwd" ;; # TODO
         media)                  optslocal="--pwd -p --project --user -d --devel -f --force-production -c --compile-missing-cs" ;; # TODO
         packages)               optslocal="--pwd -p --project --user -r --hg-revisions -i --inspire-only" ;;
         prepare-stable)         optslocal="--pwd -t --tag" ;;
