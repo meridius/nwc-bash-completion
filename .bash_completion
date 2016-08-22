@@ -300,33 +300,178 @@ _nwc() {
                 esac
             fi
             ;;
+        media)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -d --devel -f --force-production -c --compile-missing-cs"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    *)              optslocal="url link js-link css-link img-link font-link clear clear-and-link" ;;
+                esac
+            fi
+            ;;
+        packages)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -r --hg-revisions -i --inspire-only"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        prepare-stable)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -t --tag"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                esac
+            fi
+            ;;
+        remove-source-map)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                esac
+            fi
+            ;;
+        rewrite)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    *)
+                        case $prev in
+                            setting|\
+                            template|\
+                            config|\
+                            presenter|\
+                            translation|\
+                            php)
+                                _filedir && return 0
+                                ;;
+                            *)
+                                optslocal="setting template config presenter translation php"
+                                ;;
+                        esac
+                        ;;
+                esac
+            fi
+            ;;
+        rewrite-config|\
+        rewrite-php|\
+        rewrite-presenter|\
+        rewrite-setting|\
+        rewrite-template|\
+        rewrite-translation)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -f --force-rewrite"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    *)              _filedir && return 0 ;;
+                esac
+            fi
+            ;;
+        run)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -c --confirm"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        satis)
+            if [[ "${cur}" != -* ]]; then
+                _split_longopt && split=true
+                case $prev in
+                    add|\
+                    remove|\
+                    show|\
+                    update)
+                        return 0
+                        ;; # TODO suggest HG branch names
+                    *)
+                        optslocal="add remove show update"
+                        ;;
+                esac
+            fi
+            ;;
+        self-update)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                esac
+            fi
+            ;;
+        session-init)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -d --depth --project-path"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                    --project-path) _filedir -d && return 0 ;;
+                esac
+            fi
+            ;;
+        sql-dump|sqldump)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -i --import"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                esac
+            fi
+            ;;
+        switch-branches)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user --pull"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        tag-release)
+            optslocal="-f --force-tag -u --push -r --retag -s --satis-update --no-actions"
+            ;;
 # ---------------- TODO -------------- continue implementing below this line
-        media)                  optslocal="--pwd -p --project --user -d --devel -f --force-production -c --compile-missing-cs" ;; # TODO
-        packages)               optslocal="--pwd -p --project --user -r --hg-revisions -i --inspire-only" ;;
-        prepare-stable)         optslocal="--pwd -t --tag" ;;
-        remove-source-map)      optslocal="--pwd" ;;
-        rewrite)                optslocal="--pwd -p --project --user" ;; # TODO
-        rewrite-config)         optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
-        rewrite-php)            optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
-        rewrite-presenter)      optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
-        rewrite-setting)        optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
-        rewrite-template)       optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
-        rewrite-translation)    optslocal="--pwd -p --project --user -f --force-rewrite" ;; # TODO
-        run)                    optslocal="--pwd -p --project --user -c --confirm" ;; # TODO
-        satis)                  optslocal="" ;; # TODO
-        self-update)            optslocal="--pwd" ;;
-        session-init)           optslocal="--pwd -p --project --user -d --depth --project-path" ;;
-        sql-dump|sqldump)       optslocal="--pwd -i --import" ;; # TODO
-        switch-branches)        optslocal="--pwd -p --project --user --pull" ;; # TODO
-        tag-release)            optslocal="-f --force-tag -u --push -r --retag -s --satis-update --no-actions" ;; # TODO
         test)                   optslocal="--pwd -p --project --user --filter -C --clean" ;;
         unlink-packages)        optslocal="--pwd -p --project --user -pn --package-name" ;;
         update)                 optslocal="--pwd -p --project --user --dev-media --reset" ;;
         update-packages|pup)    optslocal="--pwd -p --project --user --tracy -b --default-branch" ;;
         version)                optslocal="--pwd -p --project --user -d --date -a --all -c --composer-compare" ;;
-        # *)
-        #     return 0
-        #     ;;
     esac
 
 
