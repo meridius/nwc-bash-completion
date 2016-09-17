@@ -9,12 +9,14 @@ _nwc() {
 
     # cmd > subcmd > prev
 
-    # cmd="${1##*/}"
-    # com="${2##*/}"
-    # cur="${COMP_WORDS[COMP_CWORD]}"
-    # prev="${COMP_WORDS[COMP_CWORD-1]}"
     optsglobal="-h --help -q --quiet -V --version --ansi --no-ansi -n --no-interaction -v -vv -vvv --verbose"
-    commands="_completion add bc-breaks branches brs build build-media changes ci cip cl clean-temp clone close-branch commit commit-packages deploy deploy-copy dom-binder-loader dump-autoload echo extensions generate-entity help init-project install last-tag-modifications link-packages link-upload list locale make-project make-text-web media packages prepare-stable pup remove-source-map require-js-mapping rewrite rewrite-config rewrite-php rewrite-presenter rewrite-setting rewrite-template rewrite-translation run satis self-update session-init sql-dump sqldump switch-branches tag-release test test-all unlink-packages update update-packages version"
+    commands="_completion add bc-breaks branches brs build build-media changes ci cip cl clean-temp \
+        clone close-branch commit commit-packages deploy deploy-copy dom-binder-loader dump-autoload \
+        echo extensions generate-entity help init-project install last-tag-modifications link-packages \
+        link-upload list locale make-project make-text-web media packages prepare-stable pup \
+        remove-source-map require-js-mapping rewrite rewrite-config rewrite-php rewrite-presenter \
+        rewrite-setting rewrite-template rewrite-translation run satis self-update session-init \
+        sql-dump sqldump switch-branches tag-release test test-all unlink-packages update update-packages version"
 
     local subcword cmd subcmd
     for (( subcword=1; subcword < ${#words[@]}-1; subcword++ )); do
@@ -78,7 +80,7 @@ _nwc() {
                     --pwd)          _filedir -d && return 0 ;;
                     -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
                     --user)         _usergroup && return 0 ;;
-                    -b|--branch)    ;; # TODO suggest mercurial branches
+                    -b|--branch)    _nwc_get_branches && return 0 ;;
                     *)              optslocal="current new" ;;
                 esac
             fi
@@ -123,8 +125,8 @@ _nwc() {
                 _split_longopt && split=true
                 case $prev in
                     -d|--destination)   _filedir -d && return 0 ;;
-                    -r|--rev)           ;; # TODO suggest HG revision numbers
-                    *)                  ;; # TODO suggest HG origin project (repo) names
+                    -r|--rev)           _nwc_complete_hg_revs && return 0 ;;
+                    *)                  _nwc_complete_repo_names && return 0 ;;
                 esac
             fi
             ;;
@@ -135,8 +137,8 @@ _nwc() {
                 _split_longopt && split=true
                 case $prev in
                     --pwd)              _filedir -d && return 0 ;;
-                    -m|--merge-branch)  ;; # TODO suggest HG branch names
-                    *)                  ;; # TODO suggest HG branch names
+                    -m|--merge-branch)  _nwc_get_branches && return 0 ;;
+                    *)                  _nwc_get_branches && return 0 ;;
                 esac
             fi
             ;;
@@ -410,8 +412,7 @@ _nwc() {
                     remove|\
                     show|\
                     update)
-                        return 0
-                        ;; # TODO suggest HG branch names
+                        _nwc_get_branches && return 0 ;;
                     *)
                         optslocal="add remove show update"
                         ;;
@@ -511,7 +512,7 @@ _nwc() {
                     --pwd)                  _filedir -d && return 0 ;;
                     -p|--project)           _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
                     --user)                 _usergroup && return 0 ;;
-                    -b|--default-branch)    ;; # TODO suggest HG branch names
+                    -b|--default-branch)    _nwc_get_branches && return 0 ;;
                 esac
             fi
             ;;
@@ -553,8 +554,8 @@ _nwc() {
 ## Helper functions ###
 
 
-# Determines the first non-option word of the command line. This
-# is usually the command
+# Determines the first non-option word of the command line.
+# This is usually the command
 _nwc_get_firstword() {
     local firstword i
 
@@ -570,8 +571,8 @@ _nwc_get_firstword() {
 }
 
 
-# Determines the last non-option word of the command line. This
-# is usally a sub-command
+# Determines the last non-option word of the command line.
+# This is usally a sub-command
 _nwc_get_lastword() {
     local lastword i
 
@@ -633,17 +634,11 @@ _nwc_is_word_present() {
 }
 
 
+# Shows branches of current HG repository
 _nwc_get_branches() {
     local branches
     # TODO
     echo branches
-}
-
-
-_nwc_get_users() {
-    local usernames
-    # TODO
-    echo usernames
 }
 
 
@@ -704,9 +699,20 @@ _nwc_complete_modules() {
 }
 
 
+# Suggest HG revision numbers
+_nwc_complete_hg_revs() {
+    local revs
+    # TODO
+    echo revs
+}
 
 
-
+# Suggest HG origin project (repo) names
+_nwc_complete_repo_names() {
+    local names
+    # TODO
+    echo names
+}
 
 
 
