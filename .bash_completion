@@ -466,12 +466,67 @@ _nwc() {
         tag-release)
             optslocal="-f --force-tag -u --push -r --retag -s --satis-update --no-actions"
             ;;
-# ---------------- TODO -------------- continue implementing below this line
-        test)                   optslocal="--pwd -p --project --user --filter -C --clean" ;;
-        unlink-packages)        optslocal="--pwd -p --project --user -pn --package-name" ;;
-        update)                 optslocal="--pwd -p --project --user --dev-media --reset" ;;
-        update-packages|pup)    optslocal="--pwd -p --project --user --tracy -b --default-branch" ;;
-        version)                optslocal="--pwd -p --project --user -d --date -a --all -c --composer-compare" ;;
+        test)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user --filter -C --clean"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        unlink-packages)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -pn --package-name"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        update)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user --dev-media --reset"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)          _filedir -d && return 0 ;;
+                    -p|--project)   _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)         _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
+        update-packages|pup)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user --tracy -b --default-branch"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)                  _filedir -d && return 0 ;;
+                    -p|--project)           _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)                 _usergroup && return 0 ;;
+                    -b|--default-branch)    ;; # TODO suggest HG branch names
+                esac
+            fi
+            ;;
+        version)
+            if [[ "${cur}" == -* ]]; then
+                optslocal="--pwd -p --project --user -d --date -a --all -c --composer-compare"
+            else
+                _split_longopt && split=true
+                case $prev in
+                    --pwd)                  _filedir -d && return 0 ;;
+                    -p|--project)           _nwc_complete_dirs "~/www/" "-n" && return 0 ;;
+                    --user)                 _usergroup && return 0 ;;
+                esac
+            fi
+            ;;
     esac
 
 
